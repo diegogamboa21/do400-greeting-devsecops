@@ -1,8 +1,7 @@
 pipeline {
     agent { label 'nodejs' }
 
-    // Set your OCP project
-    environment { APP_NAMESPACE = '...' }
+    environment { APP_NAMESPACE = 'ihvdgq-devsecops' }
 
     stages{
 
@@ -12,6 +11,12 @@ pipeline {
             }
         }
 
-        // Add more stages here
+        stage('deploy'){
+	   steps {
+		sh '''
+		    oc start-build greeting-devsecops --follow --wait -n ${APP_NAMESPACE}
+		'''
+	   }
+	}
     }
 }
